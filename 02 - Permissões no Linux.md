@@ -21,7 +21,15 @@ E assim somamos por categoria. Por exemplo: "chmod 754 app.py" faz,
 - **Sticky Bit:** É feito pra diretórios e impede que um usuário delete arquivos dentro dele e de outro diretório compartilhado, mesmo tendo permissão.
 
 ## Usuários, Grupos e Superusuário
-Na hierarquia:
-1. **root (UID 0):** O superusuário, sem restrições de permissões.
-2. **Usuários do Sistema:** Contas usadas por serviços, mas não para login pessoal.
-3. **Usuários Comuns:** Contas pessoais, UID geralmente maior que 1000.
+### Usuários
+1. **Root (Superusuário):** é o administrador do sistema com UID 0. Tem controle total e irrestrito sobre praticamente tudo do sistema, sem restrições de seguranças.
+2. **Usuários Comuns:** Criado para usuários que fazem login, as ações ficam limitadas ao diretório "/home/usuário" e possuem permissões restritas pra modificar arquivos da raiz do sistema. Normalmente tem UID acima de 1000
+3. **Usuários do Sistema:** Contas criadas por apps ou processos. Elas não precisam de login e são usadas pra executar serviços específicos de forma isolada.
+### Grupos
+1. **Grupo Primário(Login Group):** Grupo automático quando um usuário é criado, normalmente tem o mesmo nome do usuário. Arquivos criados por usuários assumem esse grupo por padrão.
+2. **Grupo Secundário(Suplementar):** Grupo pro usuário acessar diretórios ou arquivos específicos sem mudar de grupo principal.
+3. **Grupo de Sistemas/Administrativos:** Grupos especiais para gerenciar permissões como sudo, wheel ou adm. 
+
+## SUDO VS SU
+- **su:** Troca completamente de usuário (pra root) pedindo a senha do usuário de destino.
+- **sudo:** Executa um único comando como root (ou outro usuário), pedindo a senha do usuário atual e registra a ação em log (/varlog/auth.log). Configuração de sudo em /etc/sudoers.
